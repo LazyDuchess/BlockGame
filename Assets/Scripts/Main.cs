@@ -166,6 +166,11 @@ public class Main : MonoBehaviour
     {
         getCamera().transform.position = client.localPlayer.getEyePos();
         getCamera().transform.rotation = client.localPlayer.getEyeRotation();
+        var cams = getCamera().GetComponentsInChildren<Camera>();
+        foreach(var element in cams)
+        {
+            element.fieldOfView = 90f * client.localPlayer.GetFOV();
+        }
         client.Update();
         
         List<Vector2> chunksToLoad = new List<Vector2>();

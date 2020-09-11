@@ -14,6 +14,10 @@ public class Input
     {
         Main.client.localPlayer.yaw += UnityEngine.Input.GetAxisRaw("Mouse X") * 6f;
         Main.client.localPlayer.pitch -= UnityEngine.Input.GetAxisRaw("Mouse Y") * 6f;
+        if (UnityEngine.Input.GetButton("Sprint"))
+            Main.client.localPlayer.sprint = true;
+        else
+            Main.client.localPlayer.sprint = false;
         if (UnityEngine.Input.GetButtonDown("Jump"))
             Main.client.localPlayer.jump = true;
             //Main.client.localPlayer.rigidBody.velocity += Vector3.up * 5f;
