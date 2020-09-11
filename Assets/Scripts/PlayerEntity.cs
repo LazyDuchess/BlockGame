@@ -19,6 +19,8 @@ public class PlayerEntity : Entity
     public float airAcceleration = 5f;
     public float airTopSpeed = 4f;
 
+    
+
     public Vector3 movementAxis = Vector3.zero;
     public bool jump = false;
     public bool sprint = false;
