@@ -17,3 +17,5 @@ g to throw a grenade
 hold shift to sprint
 
 spacebar to jump
+
+hold left control to sneak
