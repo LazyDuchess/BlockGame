@@ -23,7 +23,12 @@ public class Input
             //Main.client.localPlayer.rigidBody.velocity += Vector3.up * 5f;
         if (UnityEngine.Input.GetButtonDown("Fire1"))
             Main.instance.RemoveBlockAt(Main.client.targetBlock, false);
-
+        if (UnityEngine.Input.GetButtonDown("Grenade"))
+        {
+            var gren = GameObject.Instantiate(Main.instance.grenadePrefab,Main.client.localPlayer.transform.position + 0.6f * Vector3.up, Main.client.localPlayer.getEyeRotation());
+            gren.GetComponent<LiveGrenade>().Throw(Main.client.localPlayer.getEyeRotation() * Vector3.forward * 15f + Main.client.localPlayer.rigidBody.velocity);
+            
+        }
         if (UnityEngine.Input.GetButtonDown("Fire2"))
         {
             var pos = Main.client.targetBlock + Main.client.targetBlockNormal;

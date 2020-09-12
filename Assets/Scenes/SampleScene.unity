@@ -386,7 +386,7 @@ MonoBehaviour:
     m_Bits: 512
   stopNaNPropagation: 0
   finalBlitToCameraTarget: 0
-  antialiasingMode: 0
+  antialiasingMode: 2
   temporalAntialiasing:
     jitterSpread: 0.75
     sharpness: 0.25
@@ -548,6 +548,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bba597f0001be74b959b2fa9297172c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grenadePrefab: {fileID: 4364884043797528733, guid: cf587cbf714e457418d0b93987bbf324,
+    type: 3}
+  fxProfile: {fileID: 11400000, guid: dfd19914c7528454891252aa20db3743, type: 2}
   spawnDist: 4
   viewDist: 8
   worldSeed: 98713235

@@ -55,6 +55,7 @@ public class Entity : MonoBehaviour
 
         gameObject.transform.position = position;
         gameObject.transform.rotation = rotation;
+        gameObject.layer = 10;
     }
 
     public virtual Vector3 getEyePos()

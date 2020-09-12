@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading;
+using System;
 
 public class Chunk
 {
+    public bool dirty = false;
     bool async = false;
     public static Color ao = new Color(0.1f, 0.1f, 0.1f);
     public static List<Vector2> chunkCleanUp = new List<Vector2>();
@@ -113,6 +115,11 @@ public class Chunk
     }
     public void Update()
     {
+        if (dirty)
+        {
+            AsyncRegen(true);
+            dirty = false;
+        }
         if (doneGenerating && async)
         {
             mesh.Clear();
@@ -424,6 +431,7 @@ public class Chunk
             var y = 16 + (int)(Perlin.Noise(Main.instance.perlinX + x * 0.1f, Main.instance.perlinY + z * 0.1f) * 3);
             blocks[i] = BlockRow.getAt(new Vector2(x, z));
         }
+        doneGenerating = false;
         RegenerateModel();
         doneGenerating = true;
     }
@@ -442,12 +450,21 @@ public class Chunk
 
     public void toMesh(Mesh mesh)
     {
-        
-        mesh.SetVertices(verts);
-        mesh.SetTriangles(triangles,0);
-        mesh.SetNormals(normals);
-        mesh.SetColors(colors);
-        mesh.SetUVs(0, uvs);
+        var verts2 = new List<Vector3>(verts);
+        var tris2 = new List<int>(triangles);
+        var norms2 = new List<Vector3>(normals);
+        var colors2 = new List<Color>(colors);
+        var uvs2 = new List<Vector2>(uvs);
+        if (verts2.Count != uvs2.Count || verts2.Count != norms2.Count )
+        {
+            AsyncRegen(true);
+            return;
+        }
+        mesh.SetVertices(verts2);
+        mesh.SetTriangles(tris2, 0);
+        mesh.SetNormals(norms2);
+        mesh.SetColors(colors2);
+        mesh.SetUVs(0, uvs2);
         verts.Clear();
         triangles.Clear();
         normals.Clear();

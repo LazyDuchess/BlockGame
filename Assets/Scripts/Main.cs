@@ -4,10 +4,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+using UnityEngine.Rendering.PostProcessing;
 
 public class Main : MonoBehaviour
 {
+    public GameObject grenadePrefab;
+    public PostProcessProfile fxProfile;
+
     public static Main instance;
     public static Client client;
     public int spawnDist = 2;
@@ -93,11 +96,9 @@ public class Main : MonoBehaviour
 
     public void RemoveBlockAt(Vector3 blockPos, bool forceLoad)
     {
-        //Logger.Log("Debuggi");
         var chunk = getChunkAt(blockPos, forceLoad);
         if (chunk == null)
         {
-            //Logger.Log("fak");
             return;
         }
         var row = chunk.getRowAt((int)(blockPos.x - (chunk.position.x * 16) ), (int)( blockPos.z - (chunk.position.y * 16)));
@@ -134,6 +135,7 @@ public class Main : MonoBehaviour
         if (randomSeed)
             worldSeed = UnityEngine.Random.Range(0, 999999999);
         client = new Client();
+        client.Start();
         random = new System.Random(worldSeed);
         perlinX = (float)(random.NextDouble() * maxVal);
         perlinY = (float)(random.NextDouble() * maxVal);

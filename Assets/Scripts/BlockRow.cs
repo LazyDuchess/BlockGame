@@ -99,7 +99,8 @@ public class BlockRow
         {
             this.blocks.Remove(element);
         }
-        chunk.AsyncRegen(true);
+        chunk.dirty = true;
+        //chunk.AsyncRegen(true);
     }
 
     public static BlockRow getAt(Vector2 pos)

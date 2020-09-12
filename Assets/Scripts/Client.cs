@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class Client
 {
@@ -10,13 +11,19 @@ public class Client
     public bool targeting = false;
     public Vector3 targetBlock = Vector3.zero;
     public Vector3 targetBlockNormal = Vector3.up;
+    DepthOfField dofEffect;
+    
+    public void Start()
+    {
+        dofEffect = Main.instance.fxProfile.GetSetting<DepthOfField>();
+    }
     // Update is called once per frame
     public void Update()
     {
         input.Update();
         targeting = false;
         RaycastHit hit;
-        if (Physics.Raycast(localPlayer.getEyePos(),localPlayer.getEyeRotation()*Vector3.forward,out hit, Mathf.Infinity, 1 << 8))
+        if (Physics.Raycast(localPlayer.getEyePos(), localPlayer.getEyeRotation() * Vector3.forward, out hit, Mathf.Infinity, 1 << 8))
         {
             targeting = true;
             Vector3 newNorm = new Vector3(Mathf.Round(hit.normal.x), Mathf.Round(hit.normal.y), Mathf.Round(hit.normal.z));
@@ -32,6 +39,12 @@ public class Client
             if (top.yMax <= blockPos.y)
                 blockPos.y = top.yMax;*/
             targetBlock = blockPos;
+            dofEffect.active = true;
+            dofEffect.focusDistance.value = Mathf.Lerp(dofEffect.focusDistance.value,Vector3.Distance(localPlayer.getEyePos(), hit.point),10f*Time.deltaTime);
+        }
+        else
+        {
+            dofEffect.active = false;
         }
         
     }
