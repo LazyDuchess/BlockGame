@@ -73,6 +73,11 @@ public class Entity : MonoBehaviour
         return Quaternion.Euler(0f, yaw, 0f);
     }
 
+    protected virtual void Update()
+    {
+        pitch = Mathf.Clamp(pitch, -89f, 89f);
+    }
+
     // Update is called once per frame
     protected virtual void FixedUpdate()
     {

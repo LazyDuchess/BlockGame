@@ -37,8 +37,9 @@ public class PlayerEntity : Entity
     {
         return Mathf.Lerp(1f, sprintFOV, fovLerp);
     }
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         if (sprint)
             fovLerp = Mathf.Lerp(fovLerp, 1f, 20f * Time.deltaTime);
         else
