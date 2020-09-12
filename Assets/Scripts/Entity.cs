@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
+    protected Vector3 groundPoint;
     //public GameObject gameObject;
     public Rigidbody rigidBody;
     public float height = 1.8f;
-    public float size = 0.75f;
+    public float size = 0.9f;
     public float pitch = 0f;
     public float yaw = 0f;
     public float stepSize = 0.2f;
@@ -95,6 +96,7 @@ public class Entity : MonoBehaviour
             
                 rigidBody.useGravity = false;
                 onground = true;
+            groundPoint = highest.point;
             if (highest.point != Vector3.zero)
                 transform.position = new Vector3(transform.position.x, highest.point.y + (height / 2) + 0.01f, transform.position.z);
             rigidBody.velocity = new Vector3(rigidBody.velocity.x, 0f, rigidBody.velocity.z);

@@ -29,6 +29,10 @@ public class Input
             gren.GetComponent<LiveGrenade>().Throw(Main.client.localPlayer.getEyeRotation() * Vector3.forward * 15f + Main.client.localPlayer.rigidBody.velocity);
             
         }
+        if (UnityEngine.Input.GetButton("Sneak"))
+            Main.client.localPlayer.sneaking = true;
+        else
+            Main.client.localPlayer.sneaking = false;
         if (UnityEngine.Input.GetButtonDown("Fire2"))
         {
             var pos = Main.client.targetBlock + Main.client.targetBlockNormal;
