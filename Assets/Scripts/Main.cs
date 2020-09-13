@@ -8,6 +8,8 @@ using UnityEngine.Rendering.PostProcessing;
 
 public class Main : MonoBehaviour
 {
+    public WorldData world = new WorldData();
+
     public GameObject grenadePrefab;
     public PostProcessProfile fxProfile;
 
@@ -77,8 +79,11 @@ public class Main : MonoBehaviour
             //Logger.Log("fak");
             return false;
         }
+        var rowPos = new Vector2((int)(blockPos.x), (int)(blockPos.z));
         var row = chunk.getRowAt((int)(blockPos.x - (chunk.position.x * 16)), (int)(blockPos.z - (chunk.position.y * 16)));
-        return row.PlaceBlockAt((int)blockPos.y, block, chunk);
+        var placed = row.PlaceBlockAt((int)blockPos.y, block, chunk);
+        Main.instance.world.persistentRows[rowPos] = row;
+        return placed;
     }
     /*
     public Block GetBlockAt(Vector3 blockPos, bool forceLoad)
@@ -101,8 +106,10 @@ public class Main : MonoBehaviour
         {
             return;
         }
+        var rowPos = new Vector2((int)(blockPos.x), (int)(blockPos.z));
         var row = chunk.getRowAt((int)(blockPos.x - (chunk.position.x * 16) ), (int)( blockPos.z - (chunk.position.y * 16)));
         row.RemoveAt((int)blockPos.y, chunk);
+        Main.instance.world.persistentRows[rowPos] = row;
     }
 
     public void DebugBlockAt(Vector3 blockPos)

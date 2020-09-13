@@ -428,7 +428,7 @@ public class Chunk
             
             var x = i - (Mathf.Floor(i / 16) * 16) + position.x * 16;
             var z = Mathf.Floor(i / 16) + position.y * 16;
-            var y = 16 + (int)(Perlin.Noise(Main.instance.perlinX + x * 0.1f, Main.instance.perlinY + z * 0.1f) * 3);
+            //var y = 16 + (int)(Perlin.Noise(Main.instance.perlinX + x * 0.1f, Main.instance.perlinY + z * 0.1f) * 3);
             blocks[i] = BlockRow.getAt(new Vector2(x, z));
         }
         doneGenerating = false;

@@ -35,7 +35,8 @@ public class BlockRow
         if (this.getBlockAt(height) == Blocks.AIR)
         {
             this.blocks.Add(new RowBlocks(height, height, block));
-            chunk.AsyncRegen(true);
+            chunk.dirty = true;
+            //chunk.AsyncRegen(true);
             return true;
         }
         return false;
@@ -110,12 +111,17 @@ public class BlockRow
             Logger.Error("Tried to load a chunk at an invalid position! (" + pos.ToString() + ")");
             return null;
         }
+        if (Main.instance.world.persistentRows.ContainsKey(pos))
+        {
+            return Main.instance.world.persistentRows[pos];
+        }
         var chunk = Main.instance.getChunkAt(new Vector3(pos.x,0f,pos.y), false);
         if (chunk != null && chunk.IsGenerated())
         {
             var row2 = chunk.getRowAt((int)(pos.x - (chunk.position.x * 16)), (int)(pos.y - (chunk.position.y * 16)));
             return row2;
         }
+        
         var row = new BlockRow();
         /*
         var x = i - (Mathf.Floor(i / 16) * 16) + id.x * 16;
